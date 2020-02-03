@@ -1,0 +1,60 @@
+-standalone: true
+
+-resolve.effective: active
+
+-runfw: org.eclipse.osgi
+-runee: JavaSE-11
+
+# Need to check why this is necessary
+-runsystemcapabilities: osgi.ee;osgi.ee=JavaSE;version=11
+
+-runpath: org.eclipse.fx.osgi
+
+#-runvm.1: -Dorg.osgi.framework.bundle.parent=ext
+#-runvm.2: -Dosgi.framework.extensions=org.eclipse.fx.osgi
+-runvm.3: -Defxclipse.osgi.hook.debug=true
+
+-runproperties: \
+	osgi.console=,\
+	osgi.console.enable.builtin=false,\
+	felix.fileinstall.dir=${.}/runtime/fileinstall,\
+	logback.configurationFile=file:${.}/runtime/logback.xml
+
+feature.logging: \
+    bnd.identity;id='org.apache.felix.log',\
+    bnd.identity;id='org.apache.felix.logback'
+
+#	bnd.identity;version='1.11.3';id='org.ops4j.pax.logging.pax-logging-log4j2'
+
+feature.gogo: \
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.runtime)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.command)'
+feature.webconsole: \
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.webconsole)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.webconsole.plugins.ds)'
+
+-runblacklist: bnd.identity;id='osgi.cmpn'
+
+-runrequires: \
+	${feature.logging},\
+	${feature.gogo},\
+	bnd.identity;id='de.maggu2810.playground.osgiplayground.openjfx-test',\
+	bnd.identity;id='openjfx.controls',\
+	bnd.identity;id='openjfx.graphics.linux_64',\
+	bnd.identity;id='openjfx.base'
+
+-runbundles: \
+	ch.qos.logback.classic;version='[1.2.3,1.2.4)',\
+	ch.qos.logback.core;version='[1.2.3,1.2.4)',\
+	org.apache.felix.configadmin;version='[1.9.16,1.9.17)',\
+	org.apache.felix.log;version='[1.2.0,1.2.1)',\
+	org.apache.felix.logback;version='[1.0.0,1.0.1)',\
+	slf4j.api;version='[1.7.25,1.7.26)',\
+	de.maggu2810.playground.osgiplayground.openjfx-test;version='[1.0.0,1.0.1)',\
+	org.apache.felix.scr;version='[2.1.16,2.1.17)',\
+	org.osgi.util.function;version='[1.1.0,1.1.1)',\
+	org.osgi.util.promise;version='[1.1.0,1.1.1)',\
+	openjfx.controls;version='[11.0.2,11.0.3)',\
+	openjfx.graphics.linux_64;version='[11.0.2,11.0.3)',\
+	openjfx.base;version='[11.0.2,11.0.3)'
