@@ -1,0 +1,56 @@
+-standalone: true
+
+-resolve.effective: active
+
+-runfw: org.eclipse.osgi
+-runee: JavaSE-11
+
+-runpath: org.eclipse.fx.osgi
+
+-runproperties: \
+	osgi.console=,\
+	osgi.console.enable.builtin=false,\
+	jfxmedia.loglevel=DEBUG
+
+#	felix.fileinstall.dir=${.}/runtime/fileinstall,\
+#	logback.configurationFile=file:${.}/runtime/logback.xml,\
+
+-runsystemcapabilities: osgi.contract;osgi.contract=JavaCDI;version:Version=2.0.0,\
+	osgi.service;objectClass=java.lang.Object
+
+feature.logging: \
+    bnd.identity;id='org.apache.felix.log',\
+    bnd.identity;id='org.apache.felix.logback'
+
+feature.gogo: \
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.runtime)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.command)'
+
+feature.webconsole: \
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.webconsole)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.felix.webconsole.plugins.ds)'
+
+-runblacklist.app: bnd.identity;id='osgi.cmpn'
+
+-runrequires.app: \
+	${feature.logging},\
+	${feature.gogo},\
+	bnd.identity;id='de.maggu2810.playground.osgiplayground.tetris',\
+	bnd.identity;id='openjfx.controls',\
+	bnd.identity;id='openjfx.base'
+
+-runbundles+ \
+	org.apache.aries.spifly.dynamic.bundle;startlevel=5,\
+	org.apache.geronimo.specs.geronimo-annotation_1.3_spec;startlevel=6,\
+	org.apache.geronimo.specs.geronimo-json_1.1_spec;startlevel=6,\
+	org.apache.geronimo.specs.geronimo-jsonb_1.0_spec;startlevel=6,\
+	org.apache.johnzon.core;startlevel=7,\
+	org.apache.johnzon.mapper;startlevel=7,\
+	org.apache.johnzon.jsonb;startlevel=7,\
+	org.apache.felix.configadmin;startlevel=10,\
+	org.apache.felix.gogo.runtime;startlevel=20,\
+	org.apache.felix.scr;startlevel=30,\
+	*;startlevel=80
+
+# end

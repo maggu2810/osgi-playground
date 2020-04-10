@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.maggu2810.playground.osgiplayground</groupId>
+  <artifactId>de.maggu2810.playground.osgiplayground.tetris</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <organization>
+    <name>maggu2810</name>
+    <url>https://www.maggu2810.de/</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <my.java.version>11</my.java.version>
+    <maven.compiler.source>${my.java.version}</maven.compiler.source>
+    <maven.compiler.target>${my.java.version}</maven.compiler.target>
+    <maven.compiler.compilerVersion>${my.java.version}</maven.compiler.compilerVersion>
+
+    <bnd.version>5.0.0</bnd.version>
+    <osgideps.version>0.0.3-SNAPSHOT</osgideps.version>
+  </properties>
+
+  <repositories>
+    <!-- Maven Central -->
+    <!-- Use this first, so we prefer Central all the time -->
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>bintray-maggu2810-maven</id>
+      <url>https://dl.bintray.com/maggu2810/maven/</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>de.maggu2810.osgideps</groupId>
+      <artifactId>de.maggu2810.osgideps.compile</artifactId>
+      <version>${osgideps.version}</version>
+      <type>pom</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.maggu2810.osgideps</groupId>
+      <artifactId>de.maggu2810.osgideps.compile-jfx-11</artifactId>
+      <version>${osgideps.version}</version>
+      <type>pom</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.maggu2810.osgideps</groupId>
+      <artifactId>de.maggu2810.osgideps.runtime</artifactId>
+      <type>pom</type>
+      <version>${osgideps.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.maggu2810.osgideps</groupId>
+      <artifactId>de.maggu2810.osgideps.runtime-jfx-11</artifactId>
+      <type>pom</type>
+      <version>${osgideps.version}</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+
+  <pluginRepositories>
+    <!-- Maven Central -->
+    <!-- Use this first, so we prefer Central all the time -->
+    <pluginRepository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Maven Plugin Repository</name>
+      <url>https://repo1.maven.org/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- BEG: bnd -->
+
+        <!-- Use the bnd-maven-plugin and assemble the symbolic names -->
+        <plugin>
+          <groupId>biz.aQute.bnd</groupId>
+          <artifactId>bnd-maven-plugin</artifactId>
+          <version>${bnd.version}</version>
+          <configuration>
+            <bnd><![CDATA[
+Import-Package: !javafx.*,*
+          ]]></bnd>
+          </configuration>
+          <!-- <configuration> -->
+          <!-- <bnd><![CDATA[-exportcontents: \ -->
+          <!-- !*.internal.*,\ -->
+          <!-- !*.impl.*, \ -->
+          <!-- de.maggu2810.playground.osgi.* -->
+          <!-- -sources: false -->
+          <!-- -contract: *]]></bnd> -->
+          <!-- </configuration> -->
+          <executions>
+            <execution>
+              <goals>
+                <goal>bnd-process</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- Required to make the maven-jar-plugin pick up the bnd generated manifest. Also avoid packaging empty Jars -->
+        <!-- Moved... -->
+
+        <!-- Setup the indexer for running and testing -->
+        <plugin>
+          <groupId>biz.aQute.bnd</groupId>
+          <artifactId>bnd-indexer-maven-plugin</artifactId>
+          <version>${bnd.version}</version>
+          <configuration>
+            <localURLs>REQUIRED</localURLs>
+            <attach>false</attach>
+          </configuration>
+          <executions>
+            <execution>
+              <id>index</id>
+              <goals>
+                <goal>index</goal>
+              </goals>
+              <configuration>
+                <indexName>${project.artifactId}</indexName>
+              </configuration>
+            </execution>
+            <execution>
+              <id>test-index</id>
+              <goals>
+                <goal>index</goal>
+              </goals>
+              <configuration>
+                <indexName>${project.artifactId}</indexName>
+                <outputFile>${project.build.directory}/test-index.xml</outputFile>
+                <scopes>
+                  <scope>test</scope>
+                </scopes>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Define the version of the resolver plugin we use -->
+        <plugin>
+          <groupId>biz.aQute.bnd</groupId>
+          <artifactId>bnd-resolver-maven-plugin</artifactId>
+          <version>${bnd.version}</version>
+          <configuration>
+            <failOnChanges>false</failOnChanges>
+            <bndruns></bndruns>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>resolve</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Define the version of the export plugin we use -->
+        <plugin>
+          <groupId>biz.aQute.bnd</groupId>
+          <artifactId>bnd-export-maven-plugin</artifactId>
+          <version>${bnd.version}</version>
+          <configuration>
+            <resolve>true</resolve>
+            <failOnChanges>true</failOnChanges>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>export</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Define the version of the testing plugin that we use -->
+        <plugin>
+          <groupId>biz.aQute.bnd</groupId>
+          <artifactId>bnd-testing-maven-plugin</artifactId>
+          <version>${bnd.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>testing</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Define the version of the baseline plugin we use and avoid failing when no baseline jar exists. (for example before the first release) -->
+        <plugin>
+          <groupId>biz.aQute.bnd</groupId>
+          <artifactId>bnd-baseline-maven-plugin</artifactId>
+          <version>${bnd.version}</version>
+          <configuration>
+            <failOnMissing>false</failOnMissing>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>baseline</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- END: bnd -->
+
+        <!-- BEG: official ones -->
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.0.0-M2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+            </archive>
+            <skipIfEmpty>true</skipIfEmpty>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.3</version>
+          <configuration>
+            <failOnError>!${quality.skip}</failOnError>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>3.6.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.2</version>
+          <configuration>
+            <preparationGoals>clean install</preparationGoals>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.0.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M3</version>
+        </plugin>
+
+        <!-- END: official ones -->
+
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>2.10.0</version>
+          <configuration>
+            <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+            <createBackupFile>false</createBackupFile>
+            <keepBlankLines>true</keepBlankLines>
+          </configuration>
+          <executions>
+            <execution>
+              <id>sortpom-verify</id>
+              <goals>
+                <goal>verify</goal>
+              </goals>
+              <phase>verify</phase>
+              <configuration>
+                <verifyFail>Stop</verifyFail>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>com.github.dantwining.whitespace-maven-plugin</groupId>
+          <artifactId>whitespace-maven-plugin</artifactId>
+          <version>1.0.4</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>trim</goal>
+              </goals>
+              <phase>process-sources</phase>
+            </execution>
+          </executions>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-export-maven-plugin</artifactId>
+        <configuration>
+          <failOnChanges>false</failOnChanges>
+          <bndruns>
+            <bndrun>standalone-linux.bndrun</bndrun>
+            <bndrun>standalone-mac.bndrun</bndrun>
+            <bndrun>standalone-win.bndrun</bndrun>
+          </bndruns>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-resolver-maven-plugin</artifactId>
+        <configuration>
+          <bndruns>
+            <bndrun>standalone-linux.bndrun</bndrun>
+            <bndrun>standalone-mac.bndrun</bndrun>
+            <bndrun>standalone-win.bndrun</bndrun>
+          </bndruns>
+        </configuration>
+      </plugin>
+    </plugins>
+
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>
