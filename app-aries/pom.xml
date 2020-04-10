@@ -175,7 +175,8 @@
     <dependency>
       <groupId>org.apache.aries.jax.rs</groupId>
       <artifactId>org.apache.aries.jax.rs.whiteboard</artifactId>
-      <version>1.0.5</version>
+      <version>1.0.9-SNAPSHOT</version>
+      <!-- <version>1.0.8-20200303.214553-3</version> -->
       <scope>compile</scope>
     </dependency>
 
@@ -587,7 +588,7 @@
 
     <dependency>
       <groupId>de.maggu2810.playground.osgiplayground</groupId>
-      <artifactId>de.maggu2810.playground.osgiplayground.aries-1965</artifactId>
+      <artifactId>de.maggu2810.playground.osgiplayground.aries-1968</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
 
@@ -613,6 +614,14 @@
       </snapshots>
       <id>bintray-maggu2810-maven</id>
       <url>https://dl.bintray.com/maggu2810/maven/</url>
+    </repository>
+
+    <repository>
+      <id>apache-snapshot-repo</id>
+      <url>https://repository.apache.org/content/groups/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
     </repository>
   </repositories>
 

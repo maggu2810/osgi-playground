@@ -57,4 +57,7 @@ feature.webconsole: \
 	org.osgi.util.promise;version='[1.1.0,1.1.1)',\
 	openjfx.controls;version='[11.0.2,11.0.3)',\
 	openjfx.graphics.linux_64;version='[11.0.2,11.0.3)',\
-	openjfx.base;version='[11.0.2,11.0.3)'
+	openjfx.base;version='[11.0.2,11.0.3)',\
+	org.apache.felix.gogo.command;version='[1.1.0,1.1.1)',\
+	org.apache.felix.gogo.runtime;version='[1.1.2,1.1.3)',\
+	org.apache.felix.gogo.shell;version='[1.1.2,1.1.3)'

@@ -597,21 +597,21 @@
     </dependency>
 
     <dependency>
-      <groupId>at.bestsolution.openjfx</groupId>
+      <groupId>de.maggu2810.osgi.openjfx</groupId>
       <artifactId>openjfx.controls</artifactId>
-      <version>11.0.2</version>
+      <version>11.0.2.m3</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>at.bestsolution.openjfx</groupId>
+      <groupId>de.maggu2810.osgi.openjfx</groupId>
       <artifactId>openjfx.graphics.linux_64</artifactId>
-      <version>11.0.2</version>
+      <version>11.0.2.m3</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>at.bestsolution.openjfx</groupId>
+      <groupId>de.maggu2810.osgi.openjfx</groupId>
       <artifactId>openjfx.base</artifactId>
-      <version>11.0.2</version>
+      <version>11.0.2.m3</version>
       <scope>runtime</scope>
     </dependency>
 
@@ -955,6 +955,7 @@
         </configuration>
       </plugin>
     </plugins>
+
   </build>
 
   <reporting>

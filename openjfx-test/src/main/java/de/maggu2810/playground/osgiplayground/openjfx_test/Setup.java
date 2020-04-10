@@ -11,7 +11,11 @@ public class Setup {
 
     @Activate
     public void activate() {
-        Application.launch(HelloFX.class);
+        main(null);
+    }
+
+    public static void main(final String[] args) {
+        Application.launch(HelloFX.class, args);
     }
 
 }
