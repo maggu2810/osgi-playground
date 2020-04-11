@@ -27,8 +27,8 @@
     <maven.compiler.target>${my.java.version}</maven.compiler.target>
     <maven.compiler.compilerVersion>${my.java.version}</maven.compiler.compilerVersion>
 
-    <bnd.version>5.0.0</bnd.version>
-    <osgideps.version>0.0.3-SNAPSHOT</osgideps.version>
+    <bnd.version>5.0.1</bnd.version>
+    <osgideps.version>0.0.3</osgideps.version>
   </properties>
 
   <repositories>
@@ -382,9 +382,9 @@ Import-Package: !javafx.*,*
         <configuration>
           <failOnChanges>false</failOnChanges>
           <bndruns>
-            <bndrun>standalone-linux.bndrun</bndrun>
-            <bndrun>standalone-mac.bndrun</bndrun>
-            <bndrun>standalone-win.bndrun</bndrun>
+            <bndrun>tetris-linux.bndrun</bndrun>
+            <bndrun>tetris-mac.bndrun</bndrun>
+            <bndrun>tetris-win.bndrun</bndrun>
           </bndruns>
         </configuration>
       </plugin>
@@ -393,9 +393,9 @@ Import-Package: !javafx.*,*
         <artifactId>bnd-resolver-maven-plugin</artifactId>
         <configuration>
           <bndruns>
-            <bndrun>standalone-linux.bndrun</bndrun>
-            <bndrun>standalone-mac.bndrun</bndrun>
-            <bndrun>standalone-win.bndrun</bndrun>
+            <bndrun>tetris-linux.bndrun</bndrun>
+            <bndrun>tetris-mac.bndrun</bndrun>
+            <bndrun>tetris-win.bndrun</bndrun>
           </bndruns>
         </configuration>
       </plugin>
