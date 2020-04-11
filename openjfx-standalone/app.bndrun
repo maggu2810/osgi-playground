@@ -5,7 +5,7 @@
 -runfw: org.eclipse.osgi
 -runee: JavaSE-11
 
--runpath: org.eclipse.fx.osgi
+-runpath: fxloader-osgi-eclipse
 
 -runproperties: \
 	osgi.console=,\
