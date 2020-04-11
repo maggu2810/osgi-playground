@@ -28,7 +28,7 @@
     <maven.compiler.compilerVersion>${my.java.version}</maven.compiler.compilerVersion>
 
     <bnd.version>5.0.1</bnd.version>
-    <osgideps.version>0.0.4</osgideps.version>
+    <osgideps.version>0.0.5</osgideps.version>
   </properties>
 
   <repositories>
