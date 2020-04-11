@@ -5,12 +5,13 @@
 -runfw: org.eclipse.osgi
 -runee: JavaSE-11
 
--runpath: org.eclipse.fx.osgi
+-runpath: fxloader-osgi-eclipse
 
 -runproperties: \
 	osgi.console=,\
 	osgi.console.enable.builtin=false,\
-	jfxmedia.loglevel=DEBUG
+	jfxmedia.loglevel=DEBUG,\
+	fxloader.osgi.eclipse.hook.debug=true
 
 #	felix.fileinstall.dir=${.}/runtime/fileinstall,\
 #	logback.configurationFile=file:${.}/runtime/logback.xml,\
