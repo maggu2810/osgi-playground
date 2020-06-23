@@ -27,7 +27,7 @@
     <maven.compiler.target>${my.java.version}</maven.compiler.target>
     <maven.compiler.compilerVersion>${my.java.version}</maven.compiler.compilerVersion>
 
-    <bnd.version>5.0.0</bnd.version>
+    <bnd.version>5.1.1</bnd.version>
 
     <swagger.version>2.0.8</swagger.version>
   </properties>
